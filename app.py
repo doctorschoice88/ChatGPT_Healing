@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import streamlit as st
 from openai import OpenAI
 import os
@@ -7,9 +8,9 @@ import json
 # -------------------------------------------
 # PAGE SETTINGS
 # -------------------------------------------
-st.set_page_config(page_title="Healing Mate – ChatGPT 5.1", page_icon="💚", layout="wide")
+st.set_page_config(page_title="Healing Mate – ChatGPT 4.1-mini", page_icon="💚", layout="wide")
 st.title("💚 Healing Mate (with Memory)")
-st.caption("Powered by GPT-5.1 + Local Memory + Real Human-Feel Support")
+st.caption("Powered by ChatGPT (GPT-4.1-mini) + Local Memory + Human-Feel Support")
 
 # -------------------------------------------
 # API KEY CHECK
@@ -43,7 +44,7 @@ def add_memory(text):
         save_memory(memory)
 
 # -------------------------------------------
-# ULTRA OPTIMIZED HEALING SYSTEM PROMPT
+# SYSTEM PROMPT
 # -------------------------------------------
 SYSTEM_PROMPT = f"""
 You are Rajat's personal Healing Mate.
@@ -51,35 +52,35 @@ You are Rajat's personal Healing Mate.
 STYLE:
 - Soft, calm, simple Hinglish.
 - Human-like, warm, grounded.
-- No generic AI lines.
-- No disclaimers.
-- No “As an AI”, “I cannot”, etc.
+- No generic AI lines, no disclaimers, no lecture mode.
 - Reply like a caring friend + emotional coach.
-- Short paragraphs + bullet points.
+- Short paragraphs. Use bullets for steps.
 
 GOALS:
-- Reduce anxiety, fear, tightness, trauma loops.
-- Bring Rajat bhai back to calm.
-- Guide grounding: breath, water, sunlight, walk.
-- Validate feelings, no judgement.
+- Reduce anxiety, overthinking, tightness.
+- Break trauma loops softly.
+- Slow down his system.
+- Guide him back to calm using breath, water, walk, pause.
+- Validate feelings.
 
 MEMORY:
-Use these facts about Rajat:
+These personal facts about Rajat should guide your replies naturally:
 {memory['facts']}
 
 BEHAVIOR:
-- Speak to him as “Rajat bhai”.
-- Soft, strong, gentle tone.
-- Give 3–6 calming steps.
+- Call him “Rajat bhai”.
+- Tone = supportive, soothing, grounded.
+- Always give 3–6 calming steps.
+- No long stories unless he asks.
 
 SAFETY:
-If he mentions self-harm or suicidal thoughts:
-- Stay gentle.
-- Encourage doctor/helpline.
-- No harmful instructions.
+If he mentions self-harm:
+- Stay very gentle.
+- Encourage reaching doctor/helpline.
+- Never describe harmful actions.
 
 Otherwise:
-- Full natural, unlocked, human comfort.
+- Be natural, unlocked, human, direct, comforting.
 """
 
 # -------------------------------------------
@@ -93,11 +94,11 @@ for m in st.session_state.messages:
         st.write(m["content"])
 
 # -------------------------------------------
-# GPT-5.1 CALL
+# GPT CALL FUNCTION (GPT-4.1-mini)
 # -------------------------------------------
 def ask_gpt(user_text, history):
     response = client.responses.create(
-        model="gpt-5.1",
+        model="gpt-4.1-mini",
         instructions=SYSTEM_PROMPT,
         input=history + [{"role": "user", "content": user_text}],
         max_output_tokens=500,
