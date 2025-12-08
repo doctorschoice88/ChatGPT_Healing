@@ -1,3 +1,24 @@
+import streamlit as st
+
+# --- PASSWORD KA TAALA ---
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
+
+# Agar login nahi hai, toh password maango
+if not st.session_state.authenticated:
+    st.title("🔒 ChatGPT_Healing")
+    password = st.text_input("Enter Password:", type="password")
+    
+    if st.button("Login"):
+        if password == st.secrets["APP_PASSWORD"]:  # Secret se match karega
+            st.session_state.authenticated = True
+            st.rerun()
+        else:
+            st.error("Galat Password! Hatt!")
+    st.stop()  # Yahin rok dega agar password nahi mila
+
+# --- ISKE NEECHE TERA BAAKI PURANA CODE ---
+# (Yahan se tera import google.generativeai wagera shuru hoga...)
 # -*- coding: utf-8 -*-
 
 import streamlit as st
